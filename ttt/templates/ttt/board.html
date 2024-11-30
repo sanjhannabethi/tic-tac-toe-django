@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <h1>{{game.player_name }}({{ game.PLAYER_SYMBOL }}) vs AI({{ game.AI_SYMBOL }}): {{ game.status }} </h1>
+        
+        <table style="border: 1px solid black;">
+            {% for row in game.two_d_board %} 
+                <tr>
+                {% for col in row %}
+                    <form method="post" action="{% url 'ttt:make_move' game.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="col" value="{{ forloop.counter0 }}">
+                        <input type="hidden" name="row" value="{{ forloop.parentloop.counter0 }}">
+                        <td style="border: 1px solid black;"><button type="submit">{{ col }}</button></td>
+                    </form>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+
+        </table>
+    </body>
+</html>
+    
